@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import { createClient, SUPABASE_URL, SUPABASE_ANON_KEY } from '@/lib/supabase/client'
 import { Zap, Mail, Lock, Eye, EyeOff, ArrowRight, Hash, Monitor } from 'lucide-react'
 
 type Tab = 'email' | 'code'
@@ -57,12 +57,12 @@ export default function LoginPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/crm-token-auth`,
+        `${SUPABASE_URL}/functions/v1/crm-token-auth`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+            'apikey': SUPABASE_ANON_KEY,
           },
           body: JSON.stringify({ token: cleanCode }),
         }
