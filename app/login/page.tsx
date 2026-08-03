@@ -64,7 +64,10 @@ export default function LoginPage() {
             'Content-Type': 'application/json',
             'apikey': SUPABASE_ANON_KEY,
           },
-          body: JSON.stringify({ token: cleanCode }),
+          body: JSON.stringify({
+            token: cleanCode,
+            redirectTo: `${window.location.origin}/dashboard`,
+          }),
         }
       )
 
