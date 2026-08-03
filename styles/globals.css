@@ -1,33 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Changa:wght@400;500;600;700;800&display=swap');
 
 /* ──────────────────────────────────────────
-   Design Tokens
+   Design Tokens (Color DNA & Typography Architecture)
 ────────────────────────────────────────── */
 :root {
-  /* Colors */
-  --bg-base:        #07070d;
-  --bg-surface:     #0f0f1a;
-  --bg-elevated:    #161626;
-  --bg-hover:       #1e1e32;
-  --border:         rgba(255,255,255,0.07);
-  --border-bright:  rgba(124,58,237,0.35);
+  /* Typography */
+  --font-sans:     'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-arabic:   'Changa', sans-serif;
 
-  /* Accent */
-  --accent:         #7c3aed;
-  --accent-light:   #9d5ff5;
-  --accent-glow:    rgba(124,58,237,0.25);
-  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  /* Color DNA Palette */
+  --bg-dark:        #06080F; /* Dark Abyss Black */
+  --bg-base:        #0B0F19; /* Deep Midnight Navy */
+  --bg-surface:     #111827; /* Charcoal Slate (Tailwind Slate-900) */
+  --bg-elevated:    #1f2937;
+  --bg-hover:       #374151;
 
-  /* Text */
-  --text-primary:   #f0f0fc;
-  --text-secondary: #8b8baf;
-  --text-muted:     #4a4a6a;
+  /* Glassmorphism */
+  --glass-fill:     rgba(255, 255, 255, 0.04);
+  --glass-border:   rgba(255, 255, 255, 0.10);
+  --border:         rgba(255, 255, 255, 0.10);
+  --border-bright:  rgba(26, 115, 232, 0.4);
 
-  /* Status */
-  --green:  #22c55e;
-  --red:    #ef4444;
-  --yellow: #f59e0b;
-  --blue:   #3b82f6;
+  /* Primary Action & Accents */
+  --accent:         #1A73E8; /* Primary Action Blue */
+  --accent-light:   #3b82f6;
+  --accent-glow:    rgba(26, 115, 232, 0.25);
+  --accent-gradient: linear-gradient(135deg, #1A73E8 0%, #06080F 100%);
+
+  /* Status Accents */
+  --green:  #10B981; /* Vibrant Emerald Green */
+  --red:    #E11D48; /* Alert Red */
+  --yellow: #F59E0B; /* Warning Amber */
+  --blue:   #1A73E8;
+
+  /* Typography Colors */
+  --text-primary:   #FFFFFF; /* High-contrast pure white */
+  --text-secondary: #9CA3AF; /* Muted cool grey */
+  --text-muted:     #6b7280;
 
   /* Sizing */
   --sidebar-width: 260px;
@@ -40,7 +49,17 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
   --shadow-md: 0 4px 20px rgba(0,0,0,0.5);
   --shadow-lg: 0 8px 40px rgba(0,0,0,0.6);
-  --shadow-accent: 0 4px 24px rgba(124,58,237,0.3);
+  --shadow-accent: 0 4px 24px rgba(26, 115, 232, 0.35);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+[lang="ar"], .rtl {
+  font-family: var(--font-arabic);
 }
 
 /* ──────────────────────────────────────────
