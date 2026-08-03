@@ -23,8 +23,8 @@ export default function LoginPage() {
     const x = e.clientX - rect.left - rect.width / 2
     const y = e.clientY - rect.top - rect.height / 2
 
-    const rotateX = (-y / rect.height) * 12
-    const rotateY = (x / rect.width) * 12
+    const rotateX = (-y / rect.height) * 2.5
+    const rotateY = (x / rect.width) * 2.5
 
     card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
   }
