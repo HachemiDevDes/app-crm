@@ -896,7 +896,7 @@ textarea.form-input {
   height: 450px;
   top: -10%;
   left: -5%;
-  background: radial-gradient(circle, #7c3aed 0%, rgba(124,58,237,0) 70%);
+  background: radial-gradient(circle, #1A73E8 0%, rgba(26,115,232,0) 70%);
 }
 
 .ag-orb-2 {
@@ -904,7 +904,7 @@ textarea.form-input {
   height: 500px;
   bottom: -15%;
   right: -5%;
-  background: radial-gradient(circle, #4c1d95 0%, rgba(76,29,149,0) 70%);
+  background: radial-gradient(circle, #0B0F19 0%, rgba(11,15,25,0) 70%);
   animation-delay: -6s;
 }
 
@@ -913,7 +913,7 @@ textarea.form-input {
   height: 300px;
   top: 40%;
   left: 45%;
-  background: radial-gradient(circle, #c084fc 0%, rgba(192,132,252,0) 70%);
+  background: radial-gradient(circle, #10B981 0%, rgba(16,185,129,0) 70%);
   opacity: 0.25;
   animation-delay: -3s;
 }
@@ -924,20 +924,20 @@ textarea.form-input {
   width: 100%;
   max-width: 1020px;
   min-height: 580px;
-  background: rgba(15, 15, 23, 0.75);
+  background: rgba(17, 24, 39, 0.75);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7), 0 0 40px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(26, 115, 232, 0.2);
   transform-style: preserve-3d;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
   animation: floatIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ag-split-card:hover {
-  box-shadow: 0 40px 80px -16px rgba(0, 0, 0, 0.8), 0 0 60px rgba(168, 85, 247, 0.25);
+  box-shadow: 0 40px 80px -16px rgba(0, 0, 0, 0.9), 0 0 60px rgba(26, 115, 232, 0.3);
 }
 
 /* Left Form Side */
@@ -964,12 +964,12 @@ textarea.form-input {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%);
+  background: linear-gradient(135deg, #1A73E8 0%, #0B0F19 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 8px 20px rgba(26, 115, 232, 0.4);
 }
 
 .ag-brand-name {
@@ -991,7 +991,7 @@ textarea.form-input {
 
 .ag-subheading {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
+  color: #9CA3AF;
   line-height: 1.5;
   margin-bottom: 32px;
   transform: translateZ(20px);
@@ -1012,8 +1012,8 @@ textarea.form-input {
   width: 44px;
   height: 54px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.10);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1025,16 +1025,16 @@ textarea.form-input {
 }
 
 .ag-slot.filled {
-  background: rgba(168, 85, 247, 0.15);
-  border-color: #a855f7;
-  color: #c084fc;
-  box-shadow: 0 0 16px rgba(168, 85, 247, 0.35), inset 0 2px 4px rgba(0,0,0,0.2);
+  background: rgba(26, 115, 232, 0.15);
+  border-color: #1A73E8;
+  color: #60a5fa;
+  box-shadow: 0 0 16px rgba(26, 115, 232, 0.4), inset 0 2px 4px rgba(0,0,0,0.2);
   transform: translateY(-2px) scale(1.04);
 }
 
 .ag-slot.active {
-  border-color: #c084fc;
-  box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+  border-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
   animation: pulseGlow 1.5s ease-in-out infinite;
 }
 
@@ -1059,8 +1059,8 @@ textarea.form-input {
 
 /* Helper Box */
 .ag-helper-box {
-  background: rgba(168, 85, 247, 0.08);
-  border: 1px solid rgba(168, 85, 247, 0.25);
+  background: rgba(26, 115, 232, 0.08);
+  border: 1px solid rgba(26, 115, 232, 0.25);
   backdrop-filter: blur(12px);
   border-radius: 14px;
   padding: 14px 16px;
@@ -1072,14 +1072,14 @@ textarea.form-input {
 }
 
 .ag-helper-icon {
-  color: #c084fc;
+  color: #3b82f6;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .ag-helper-text {
   font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #9CA3AF;
   line-height: 1.5;
   margin: 0;
 }
@@ -1092,7 +1092,7 @@ textarea.form-input {
 .ag-submit-btn {
   width: 100%;
   height: 54px;
-  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%);
+  background: linear-gradient(135deg, #1A73E8 0%, #1d4ed8 100%);
   color: #ffffff;
   border: none;
   border-radius: 14px;
@@ -1104,13 +1104,13 @@ textarea.form-input {
   justify-content: center;
   gap: 10px;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+  box-shadow: 0 8px 24px rgba(26, 115, 232, 0.4);
   transform: translateZ(25px);
 }
 
 .ag-submit-btn:hover {
-  background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #7c3aed 100%);
-  box-shadow: 0 12px 32px rgba(168, 85, 247, 0.6);
+  background: linear-gradient(135deg, #3b82f6 0%, #1A73E8 100%);
+  box-shadow: 0 12px 32px rgba(26, 115, 232, 0.6);
   transform: translateZ(32px) translateY(-2px);
 }
 
@@ -1125,9 +1125,9 @@ textarea.form-input {
 }
 
 .ag-error-msg {
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #fca5a5;
+  background: rgba(225, 29, 72, 0.12);
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  color: #fda4af;
   padding: 12px 16px;
   border-radius: 12px;
   font-size: 13px;
@@ -1139,7 +1139,7 @@ textarea.form-input {
 /* Right Side Spatial Hero */
 .ag-hero-side {
   flex: 0.85;
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.4) 0%, rgba(76, 29, 149, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(26, 115, 232, 0.35) 0%, rgba(11, 15, 25, 0.8) 100%);
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -1166,7 +1166,7 @@ textarea.form-input {
   max-width: 320px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15);
   transform: translateZ(40px) rotateY(-6deg) rotateX(4deg);
   transition: transform 0.4s ease;
 }
@@ -1197,7 +1197,7 @@ textarea.form-input {
 }
 
 .ag-hero-desc {
-  color: rgba(255, 255, 255, 0.75);
+  color: #9CA3AF;
   font-size: 13px;
   line-height: 1.5;
   max-width: 280px;
@@ -1225,8 +1225,9 @@ textarea.form-input {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: rgba(168, 85, 247, 0.3);
-  border: 1px solid rgba(168, 85, 247, 0.5);
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #10B981;
   display: flex;
   align-items: center;
   justify-content: center;
