@@ -157,11 +157,37 @@ function ContactDrawer({
   const [notes, setNotes] = useState(contact.notes || '')
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [showAddTag, setShowAddTag] = useState(false)
+  const [newTagInput, setNewTagInput] = useState('')
 
   const saveNotes = async () => {
     setSaving(true)
     await supabase.from('connections').update({ notes }).eq('id', contact.id)
     setSaving(false)
+    onUpdate()
+  }
+
+  const handleRemoveTag = async (tagToRemove: string) => {
+    const updatedTags = (contact.tags || []).filter((t) => t !== tagToRemove)
+    await supabase.from('connections').update({ tags: updatedTags }).eq('id', contact.id)
+    contact.tags = updatedTags
+    onUpdate()
+  }
+
+  const handleAddTag = async () => {
+    const trimmed = newTagInput.trim()
+    if (!trimmed) return
+    const currentTags = contact.tags || []
+    if (currentTags.includes(trimmed)) {
+      setNewTagInput('')
+      setShowAddTag(false)
+      return
+    }
+    const updatedTags = [...currentTags, trimmed]
+    await supabase.from('connections').update({ tags: updatedTags }).eq('id', contact.id)
+    contact.tags = updatedTags
+    setNewTagInput('')
+    setShowAddTag(false)
     onUpdate()
   }
 
@@ -227,14 +253,51 @@ function ContactDrawer({
           </div>
 
           {/* Tags */}
-          {contact.tags && contact.tags.length > 0 && (
-            <div className="drawer-section">
-              <div className="drawer-section-title">Tags</div>
-              <div className="tags-wrap">
-                {contact.tags.map((t) => <span key={t} className="tag">{t}</span>)}
-              </div>
+          <div className="drawer-section">
+            <div className="drawer-section-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>Tags</span>
+              {!showAddTag && (
+                <button
+                  className="btn btn-ghost btn-sm"
+                  style={{ padding: '2px 8px', fontSize: 11 }}
+                  onClick={() => setShowAddTag(true)}
+                >
+                  + Add Tag
+                </button>
+              )}
             </div>
-          )}
+            <div className="tags-wrap" style={{ marginTop: 8 }}>
+              {(contact.tags || []).map((t) => (
+                <span key={t} className="tag" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  {t}
+                  <button
+                    onClick={() => handleRemoveTag(t)}
+                    style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', padding: 0 }}
+                    title={`Remove tag "${t}"`}
+                  >
+                    <X size={12} />
+                  </button>
+                </span>
+              ))}
+              {(!contact.tags || contact.tags.length === 0) && !showAddTag && (
+                <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>No tags attached</span>
+              )}
+            </div>
+            {showAddTag && (
+              <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+                <input
+                  className="form-input"
+                  style={{ padding: '6px 10px', fontSize: 12 }}
+                  placeholder="New tag..."
+                  value={newTagInput}
+                  onChange={(e) => setNewTagInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
+                />
+                <button className="btn btn-primary btn-sm" onClick={handleAddTag}>Add</button>
+                <button className="btn btn-ghost btn-sm" onClick={() => setShowAddTag(false)}><X size={12} /></button>
+              </div>
+            )}
+          </div>
 
           {/* Notes */}
           <div className="drawer-section">
