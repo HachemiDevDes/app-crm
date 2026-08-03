@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient, SUPABASE_URL, SUPABASE_ANON_KEY } from '@/lib/supabase/client'
 import { Zap, ArrowRight, Monitor, Check } from 'lucide-react'
@@ -13,17 +13,48 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // 3D Card Perspective Tilt
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return
+    const card = cardRef.current
+    const rect = card.getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+
+    const rotateX = (-y / rect.height) * 12
+    const rotateY = (x / rect.width) * 12
+
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+  }
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return
+    cardRef.current.style.transform = `rotateX(0deg) rotateY(0deg)`
+  }
+
+  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
+    if (raw.length <= 8) {
+      setCode(raw)
+    }
+  }
+
   const handleCodeLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
 
-    const cleanCode = code.trim().toUpperCase().replace(/\s/g, '')
-    if (!cleanCode || cleanCode.length < 4) {
-      setError('Please enter your 8-character login code')
+    const cleanCode = code.trim().toUpperCase()
+    if (cleanCode.length < 8) {
+      setError('Please enter all 8 characters of your login code')
       setLoading(false)
       return
     }
+
+    // Format XXXX-XXXX for server API query
+    const formattedCode = `${cleanCode.slice(0, 4)}-${cleanCode.slice(4, 8)}`
 
     try {
       const res = await fetch(
@@ -34,7 +65,7 @@ export default function LoginPage() {
             'Content-Type': 'application/json',
             'apikey': SUPABASE_ANON_KEY,
           },
-          body: JSON.stringify({ token: cleanCode }),
+          body: JSON.stringify({ token: formattedCode }),
         }
       )
 
@@ -74,58 +105,110 @@ export default function LoginPage() {
     }
   }
 
+  // Parse raw code for 8 slots
+  const chars = code.split('')
+  const slotIndices = [0, 1, 2, 3, 4, 5, 6, 7]
+
   return (
     <div className="login-page">
-      <div className="login-split-card">
+      {/* 3D Ambient Orbs */}
+      <div className="ag-orb ag-orb-1" />
+      <div className="ag-orb ag-orb-2" />
+      <div className="ag-orb ag-orb-3" />
 
-        {/* ── Left Side: Pure White & Crisp Code Login Form ── */}
-        <div className="login-form-side">
+      {/* 3D Tilt Spatial Container */}
+      <div
+        ref={cardRef}
+        className="ag-split-card"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
 
-          {/* Logo Branding */}
-          <div className="login-brand">
-            <div className="login-brand-icon">
-              <Zap size={20} color="white" />
+        {/* ── Left Panel: Form ── */}
+        <div className="ag-form-side">
+
+          {/* Logo */}
+          <div className="ag-brand">
+            <div className="ag-brand-icon">
+              <Zap size={22} color="white" />
             </div>
-            <span className="login-brand-name">EventZone CRM</span>
+            <span className="ag-brand-name">EventZone CRM</span>
           </div>
 
           {/* Heading */}
-          <h1 className="login-heading">
-            Welcome to our CRM.<br />Enter your code to start.
+          <h1 className="ag-heading">
+            Antigravity CRM.<br />Enter your code.
           </h1>
-          <p className="login-subheading">
-            Enter your unique 8-character desktop CRM code from the EventZone mobile app to log in instantly.
+          <p className="ag-subheading">
+            Enter your 8-character desktop code from the EventZone mobile app to log in instantly.
           </p>
 
-          {error && <div className="login-error-msg">{error}</div>}
+          {error && <div className="ag-error-msg">{error}</div>}
 
           {/* Code Input Form */}
           <form onSubmit={handleCodeLogin}>
-            <div className="login-code-input-wrap">
-              <label className="login-code-label">Desktop CRM Code</label>
-              <input
-                type="text"
-                className="login-code-field"
-                placeholder="XXXX-XXXX"
-                value={code}
-                onChange={(e) => setCode(e.target.value.toUpperCase())}
-                maxLength={9}
-                autoComplete="off"
-                autoFocus
-                spellCheck={false}
-              />
+
+            <div style={{ position: 'relative', marginBottom: 24 }}>
+
+              {/* Segmented Glass Character Slots */}
+              <div className="ag-slots-container">
+                {/* First 4 Slots */}
+                {slotIndices.slice(0, 4).map((idx) => {
+                  const char = chars[idx] || ''
+                  const isFilled = char !== ''
+                  const isActive = code.length === idx
+                  return (
+                    <div
+                      key={idx}
+                      className={`ag-slot ${isFilled ? 'filled' : ''} ${isActive ? 'active' : ''}`}
+                    >
+                      {char}
+                    </div>
+                  )
+                })}
+
+                <div className="ag-slot-dash">-</div>
+
+                {/* Last 4 Slots */}
+                {slotIndices.slice(4, 8).map((idx) => {
+                  const char = chars[idx] || ''
+                  const isFilled = char !== ''
+                  const isActive = code.length === idx
+                  return (
+                    <div
+                      key={idx}
+                      className={`ag-slot ${isFilled ? 'filled' : ''} ${isActive ? 'active' : ''}`}
+                    >
+                      {char}
+                    </div>
+                  )
+                })}
+
+                {/* Hidden Real Input covering the slots area */}
+                <input
+                  type="text"
+                  className="ag-hidden-input"
+                  value={code}
+                  onChange={handleCodeChange}
+                  maxLength={8}
+                  autoComplete="off"
+                  autoFocus
+                  spellCheck={false}
+                />
+              </div>
+
             </div>
 
-            {/* Mobile App Helper Box */}
-            <div className="login-helper-box">
-              <Monitor size={18} className="login-helper-icon" />
-              <p className="login-helper-text">
-                Open <strong>EventZone app</strong> on your phone &rarr; <strong>Settings</strong> &rarr; <strong>Desktop CRM</strong> to view or refresh your code.
+            {/* Helper Card */}
+            <div className="ag-helper-box">
+              <Monitor size={18} className="ag-helper-icon" />
+              <p className="ag-helper-text">
+                Open <strong>EventZone app</strong> &rarr; <strong>Settings</strong> &rarr; <strong>Desktop CRM</strong> to view or refresh your code.
               </p>
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="login-submit-button" disabled={loading}>
+            <button type="submit" className="ag-submit-btn" disabled={loading || code.length < 8}>
               {loading ? (
                 <>
                   <div className="spinner" style={{ width: 18, height: 18, borderWidth: 2, borderColor: '#ffffff', borderTopColor: 'transparent' }} />
@@ -133,7 +216,7 @@ export default function LoginPage() {
                 </>
               ) : (
                 <>
-                  Sign In <ArrowRight size={17} />
+                  Authenticate <ArrowRight size={18} />
                 </>
               )}
             </button>
@@ -141,30 +224,32 @@ export default function LoginPage() {
 
         </div>
 
-        {/* ── Right Side: Rich Purple Hero Illustration ── */}
-        <div className="login-hero-side">
-          <div className="login-hero-card">
-            <img src="/crm_hero.jpg" alt="EventZone CRM Illustration" />
+        {/* ── Right Panel: Spatial 3D Hero ── */}
+        <div className="ag-hero-side">
+          <div className="ag-hero-bg-grid" />
+
+          <div className="ag-hero-card">
+            <img src="/crm_hero.jpg" alt="EventZone Antigravity Illustration" />
           </div>
 
-          <div className="login-hero-text-wrap">
-            <h2 className="login-hero-text-title">EventZone CRM</h2>
-            <p className="login-hero-text-desc">
-              Manage, organize, and export your event network contacts seamlessly across mobile and desktop.
+          <div className="ag-hero-text-wrap">
+            <h2 className="ag-hero-title">EventZone CRM</h2>
+            <p className="ag-hero-desc">
+              Weightless, spatial contact management synced across mobile & desktop.
             </p>
 
-            <div className="login-hero-bullets">
-              <div className="login-hero-bullet-item">
-                <div className="login-hero-bullet-icon"><Check size={11} color="white" /></div>
+            <div className="ag-hero-bullets">
+              <div className="ag-hero-bullet-item">
+                <div className="ag-hero-bullet-icon"><Check size={11} color="white" /></div>
                 Realtime mobile & desktop sync
               </div>
-              <div className="login-hero-bullet-item">
-                <div className="login-hero-bullet-icon"><Check size={11} color="white" /></div>
-                One-click CSV / Excel export
+              <div className="ag-hero-bullet-item">
+                <div className="ag-hero-bullet-icon"><Check size={11} color="white" /></div>
+                One-click CSV & Excel export
               </div>
-              <div className="login-hero-bullet-item">
-                <div className="login-hero-bullet-icon"><Check size={11} color="white" /></div>
-                Passwordless 1-step code authentication
+              <div className="ag-hero-bullet-item">
+                <div className="ag-hero-bullet-icon"><Check size={11} color="white" /></div>
+                Passwordless code authentication
               </div>
             </div>
           </div>
