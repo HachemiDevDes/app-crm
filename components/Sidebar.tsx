@@ -91,8 +91,8 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       {/* Logo */}
-      <div className="sidebar-logo" style={{ padding: '4px 0' }}>
-        <EventZoneLogo height={34} showCrm={true} />
+      <div className="sidebar-logo" style={{ padding: '0 20px 24px', borderBottom: '1px solid var(--border)' }}>
+        <EventZoneLogo height={20} showCrm={true} />
       </div>
 
       {/* Navigation */}
