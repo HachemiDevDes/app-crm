@@ -1502,3 +1502,141 @@ textarea.form-input {
   .form-row { grid-template-columns: 1fr; }
   .drawer { width: 100vw; }
 }
+
+/* ──────────────────────────────────────────
+   Deals Pipeline Board (Kanban View)
+────────────────────────────────────────── */
+.ag-board {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  align-items: flex-start;
+  min-height: calc(100vh - 280px);
+}
+
+.ag-column {
+  flex: 1;
+  min-width: 250px;
+  max-width: 320px;
+  background: rgba(17, 24, 39, 0.4);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 0.25s ease;
+}
+
+.ag-column:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(17, 24, 39, 0.5);
+}
+
+.ag-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ag-column-title {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.2px;
+}
+
+.ag-column-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ag-column-header.blue .ag-column-dot { background: var(--accent); }
+.ag-column-header.purple .ag-column-dot { background: #c084fc; }
+.ag-column-header.yellow .ag-column-dot { background: var(--yellow); }
+.ag-column-header.green .ag-column-dot { background: var(--green); }
+.ag-column-header.red .ag-column-dot { background: var(--red); }
+
+.ag-column-badge {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.ag-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 400px;
+}
+
+.ag-column-empty {
+  border: 1.5px dashed rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: 28px 12px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  transition: all 0.2s ease;
+}
+
+.ag-deal-card {
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  cursor: grab;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ag-deal-card:hover {
+  border-color: var(--border-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -5px rgba(26, 115, 232, 0.3);
+}
+
+.ag-deal-card:active {
+  cursor: grabbing;
+}
+
+.ag-deal-card.dragging {
+  opacity: 0.35;
+  transform: scale(0.96);
+}
+
+.ag-deal-card.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.ag-deal-nav-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ag-deal-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border-color: var(--border-bright);
+}
+

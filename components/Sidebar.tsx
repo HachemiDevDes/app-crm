@@ -11,12 +11,14 @@ import {
   Zap,
   LogOut,
   Settings,
+  GitBranch,
 } from 'lucide-react'
 import EventZoneLogo from './EventZoneLogo'
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { href: '/dashboard/contacts', label: 'Contacts', icon: Users },
+  { href: '/dashboard/pipeline', label: 'Pipeline', icon: GitBranch },
   { href: '/dashboard/profile', label: 'My Profile', icon: User },
 ]
 
