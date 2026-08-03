@@ -129,8 +129,8 @@ export default function LoginPage() {
         <div className="ag-form-side">
 
           {/* Official EventZone Horizontal Logo */}
-          <div style={{ marginBottom: 28 }}>
-            <EventZoneLogo height={42} showCrm={true} />
+          <div style={{ marginBottom: 28, display: 'flex', justifyContent: 'flex-start' }}>
+            <EventZoneLogo height={24} showCrm={true} />
           </div>
 
           {/* Heading */}
