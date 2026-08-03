@@ -35,19 +35,11 @@ export default function LoginPage() {
     cardRef.current.style.transform = `rotateX(0deg) rotateY(0deg)`
   }
 
-  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
-    if (raw.length <= 8) {
-      setCode(raw)
-    }
-  }
-
-  const handleCodeLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const performAuth = async (rawCode: string) => {
     setLoading(true)
     setError(null)
 
-    const cleanCode = code.trim().toUpperCase()
+    const cleanCode = rawCode.trim().toUpperCase()
     if (cleanCode.length < 8) {
       setError('Please enter all 8 characters of your login code')
       setLoading(false)
@@ -104,6 +96,21 @@ export default function LoginPage() {
       setError('Network error. Please check your connection.')
       setLoading(false)
     }
+  }
+
+  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
+    if (raw.length <= 8) {
+      setCode(raw)
+      if (raw.length === 8) {
+        performAuth(raw)
+      }
+    }
+  }
+
+  const handleCodeLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    performAuth(code)
   }
 
   return (
