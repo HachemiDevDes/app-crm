@@ -26,17 +26,49 @@ export default function Sidebar() {
   const [profile, setProfile] = useState<{ full_name?: string; avatar_url?: string; job_title?: string } | null>(null)
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    let channel: any
+
+    const fetchProfileAndListen = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
+
       const { data } = await supabase
         .from('profiles')
         .select('full_name, avatar_url, job_title')
         .eq('id', user.id)
         .single()
       if (data) setProfile(data)
+
+      // Listen for crm_token refresh in mobile app -> instantly log out CRM session
+      channel = supabase
+        .channel(`crm-token-monitor-${user.id}`)
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'profiles',
+            filter: `id=eq.${user.id}`,
+          },
+          async (payload: any) => {
+            if (
+              payload.new &&
+              payload.old &&
+              payload.new.crm_token !== payload.old.crm_token
+            ) {
+              await supabase.auth.signOut()
+              window.location.href = '/login'
+            }
+          }
+        )
+        .subscribe()
     }
-    fetchProfile()
+
+    fetchProfileAndListen()
+
+    return () => {
+      if (channel) supabase.removeChannel(channel)
+    }
   }, [])
 
   const handleLogout = async () => {
