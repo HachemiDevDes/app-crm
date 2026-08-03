@@ -12,6 +12,7 @@ import {
   LogOut,
   Settings,
 } from 'lucide-react'
+import EventZoneLogo from './EventZoneLogo'
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, exact: true },
@@ -88,14 +89,8 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       {/* Logo */}
-      <div className="sidebar-logo">
-        <div className="sidebar-logo-icon">
-          <Zap size={18} color="white" />
-        </div>
-        <div>
-          <div className="sidebar-logo-text">EventZone</div>
-          <div className="sidebar-logo-sub">CRM</div>
-        </div>
+      <div className="sidebar-logo" style={{ padding: '4px 0' }}>
+        <EventZoneLogo height={34} showCrm={true} />
       </div>
 
       {/* Navigation */}

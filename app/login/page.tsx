@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient, SUPABASE_URL, SUPABASE_ANON_KEY } from '@/lib/supabase/client'
 import { Zap, ArrowRight, Monitor, Check } from 'lucide-react'
+import EventZoneLogo from '@/components/EventZoneLogo'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -127,12 +128,9 @@ export default function LoginPage() {
         {/* ── Left Panel: Form ── */}
         <div className="ag-form-side">
 
-          {/* Logo */}
-          <div className="ag-brand">
-            <div className="ag-brand-icon">
-              <Zap size={22} color="white" />
-            </div>
-            <span className="ag-brand-name">EventZone CRM</span>
+          {/* Official EventZone Horizontal Logo */}
+          <div style={{ marginBottom: 28 }}>
+            <EventZoneLogo height={42} showCrm={true} />
           </div>
 
           {/* Heading */}
