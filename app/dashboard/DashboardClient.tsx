@@ -229,7 +229,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
       </div>
 
       {/* Mobile-Style Widgets Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '32px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '32px', alignItems: 'start' }}>
         
         {/* Streak & Goals Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -407,10 +407,10 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
         <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.3px' }}>{dict.network_analytics || 'Network Analytics'}</h2>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '40px', alignItems: 'start' }}>
         
         {/* Connections Over Time */}
-        <div className="card" style={{ padding: '24px', height: '320px', display: 'flex', flexDirection: 'column' }}>
+        <div className="card" style={{ padding: '24px', height: '260px', display: 'flex', flexDirection: 'column' }}>
           <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 20 }}>{dict.connections_chart || 'Connections (Last 7 Days)'}</h3>
           <div style={{ flex: 1, minHeight: 0 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -436,8 +436,8 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
 
         {/* Pipeline Distribution & Busiest Days */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div className="card" style={{ padding: '24px', flex: 1, minHeight: '150px', display: 'flex', flexDirection: 'column' }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 20 }}>{dict.deals_pipeline || 'Deals Pipeline'}</h3>
+          <div className="card" style={{ padding: '20px 24px', height: '120px', display: 'flex', flexDirection: 'column' }}>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 12 }}>{dict.deals_pipeline || 'Deals Pipeline'}</h3>
             <div style={{ flex: 1, minHeight: 0 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={pipelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -457,8 +457,8 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
             </div>
           </div>
           
-          <div className="card" style={{ padding: '24px', flex: 1, minHeight: '150px', display: 'flex', flexDirection: 'column' }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 20 }}>Busiest Networking Days</h3>
+          <div className="card" style={{ padding: '20px 24px', height: '120px', display: 'flex', flexDirection: 'column' }}>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 12 }}>Busiest Networking Days</h3>
             <div style={{ flex: 1, minHeight: 0 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={daysOfWeek} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -476,7 +476,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
         </div>
 
         {/* Recent Contacts List */}
-        <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
+        <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', maxHeight: '260px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
             <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{dict.recent_contacts || 'Recent Contacts'}</h3>
             <Link href="/dashboard/contacts" style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--accent-light)', fontWeight: 500 }}>
