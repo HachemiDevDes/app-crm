@@ -1520,8 +1520,8 @@ textarea.form-input {
 }
 
 .ag-column {
-  flex: 0 0 300px;
-  min-width: 300px;
+  flex: 0 0 315px;
+  min-width: 315px;
   background: rgba(17, 24, 39, 0.4);
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
