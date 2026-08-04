@@ -208,7 +208,7 @@ export default function LoginPage() {
         <div className="ag-hero-side">
           <div className="ag-hero-bg-grid" />
 
-          <div className="ag-hero-card" style={{ transform: 'translateZ(40px) rotateY(-4deg) rotateX(2deg)', maxWidth: '340px' }}>
+          <div className="ag-hero-card" style={{ transform: 'translateZ(40px) rotateY(-4deg) rotateX(2deg)' }}>
             <img src="/crm_hero.jpg" alt="EventZone Antigravity Illustration" />
           </div>
         </div>

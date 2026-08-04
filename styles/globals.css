@@ -1174,11 +1174,9 @@ textarea.form-input {
 .ag-hero-side {
   flex: 0.85;
   background: linear-gradient(135deg, rgba(26, 115, 232, 0.35) 0%, rgba(11, 15, 25, 0.8) 100%);
-  padding: 40px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   position: relative;
   overflow: hidden;
   transform-style: preserve-3d;
@@ -1191,27 +1189,26 @@ textarea.form-input {
   background-size: 24px 24px;
   opacity: 0.5;
   pointer-events: none;
+  z-index: 1;
 }
 
 .ag-hero-card {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
   width: 100%;
-  max-width: 320px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15);
-  transform: translateZ(40px) rotateY(-6deg) rotateX(4deg);
+  height: 100%;
   transition: transform 0.4s ease;
 }
 
 .ag-hero-card:hover {
-  transform: translateZ(55px) rotateY(0deg) rotateX(0deg);
+  transform: translateZ(10px);
 }
 
 .ag-hero-card img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
