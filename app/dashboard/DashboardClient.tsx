@@ -2,6 +2,10 @@
 
 import Link from 'next/link'
 import { Users, UserPlus, Zap, TrendingUp, ArrowRight } from 'lucide-react'
+import {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
+  BarChart, Bar, Cell
+} from 'recharts'
 
 interface Props {
   total: number
@@ -9,6 +13,7 @@ interface Props {
   newContacts: number
   recent: any[]
   profile: any
+  allConnections?: any[]
 }
 
 function getInitials(name: string) {
@@ -20,7 +25,7 @@ function getInitials(name: string) {
     .toUpperCase() || '?'
 }
 
-export default function DashboardClient({ total, newThisWeek, newContacts, recent, profile }: Props) {
+export default function DashboardClient({ total, newThisWeek, newContacts, recent, profile, allConnections = [] }: Props) {
   const stats = [
     {
       label: 'Total Contacts',
@@ -55,6 +60,44 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
       changeDir: 'up',
     },
   ]
+
+  // Pipeline Data
+  const stageCounts: Record<string, number> = {
+    'New': 0,
+    'Contacted': 0,
+    'Proposal': 0,
+    'Won': 0,
+    'Lost': 0
+  }
+  allConnections.forEach(c => {
+    const stage = c.pipeline_stage || 'New'
+    if (stageCounts[stage] !== undefined) {
+      stageCounts[stage]++
+    }
+  })
+  const pipelineData = Object.keys(stageCounts).map(key => ({
+    name: key,
+    value: stageCounts[key]
+  }))
+
+  const colors = {
+    'New': '#3b82f6',       // Blue
+    'Contacted': '#8b5cf6', // Purple
+    'Proposal': '#f59e0b',  // Orange
+    'Won': '#10b981',       // Green
+    'Lost': '#ef4444'       // Red
+  }
+
+  // Timeline Data (Last 7 Days)
+  const timelineData = []
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date()
+    d.setDate(d.getDate() - i)
+    const dateStr = d.toISOString().split('T')[0]
+    const shortDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    const count = allConnections.filter(c => c.created_at?.startsWith(dateStr)).length
+    timelineData.push({ name: shortDate, Contacts: count })
+  }
 
   return (
     <>
@@ -139,6 +182,64 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
           ))}
         </div>
       )}
+
+      {/* Analytics Section */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '32px 0 16px' }}>
+        <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.3px' }}>Network Analytics</h2>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '40px' }}>
+        
+        {/* Connections Over Time */}
+        <div className="card" style={{ padding: '24px', height: '320px', display: 'flex', flexDirection: 'column' }}>
+          <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 20 }}>Connections (Last 7 Days)</h3>
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={timelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorContacts" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#1A73E8" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#1A73E8" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <XAxis dataKey="name" stroke="#9CA3AF" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#9CA3AF" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
+                <RechartsTooltip 
+                  contentStyle={{ backgroundColor: 'rgba(17,24,39,0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                  itemStyle={{ color: '#fff' }}
+                />
+                <Area type="monotone" dataKey="Contacts" stroke="#1A73E8" strokeWidth={3} fillOpacity={1} fill="url(#colorContacts)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Pipeline Distribution */}
+        <div className="card" style={{ padding: '24px', height: '320px', display: 'flex', flexDirection: 'column' }}>
+          <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 20 }}>Deals Pipeline</h3>
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={pipelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <XAxis dataKey="name" stroke="#9CA3AF" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#9CA3AF" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
+                <RechartsTooltip 
+                  contentStyle={{ backgroundColor: 'rgba(17,24,39,0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                  itemStyle={{ color: '#fff' }}
+                  cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                />
+                <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={50}>
+                  {pipelineData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={(colors as any)[entry.name] || '#3b82f6'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+      </div>
     </>
   )
 }

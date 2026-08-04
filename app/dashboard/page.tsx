@@ -11,7 +11,7 @@ export default async function DashboardPage() {
   const [connectionsRes, profileRes] = await Promise.all([
     supabase
       .from('connections')
-      .select('id, name, title, company, avatar_url, created_at, tags, source, is_new')
+      .select('id, name, title, company, avatar_url, created_at, tags, source, is_new, pipeline_stage')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false }),
     supabase
@@ -38,6 +38,7 @@ export default async function DashboardPage() {
       newContacts={newContacts}
       recent={recent}
       profile={profile}
+      allConnections={connections}
     />
   )
 }
