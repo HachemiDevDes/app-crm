@@ -38,9 +38,12 @@ export default function Sidebar({ dict = {} }: { dict?: any }) {
 
       const { data } = await supabase
         .from('profiles')
-        .select('full_name, avatar_url, job_title')
+        .select('full_name, avatar_url, job_title, crm_token')
         .eq('id', user.id)
         .single()
+      
+      let currentCrmToken = data?.crm_token
+
       if (data) setProfile(data)
 
       // Listen for crm_token refresh in mobile app -> instantly log out CRM session
@@ -55,10 +58,11 @@ export default function Sidebar({ dict = {} }: { dict?: any }) {
             filter: `id=eq.${user.id}`,
           },
           async (payload: any) => {
+            // Only trigger logout if the new payload has a crm_token and it differs from the one we loaded
             if (
-              payload.new &&
-              payload.old &&
-              payload.new.crm_token !== payload.old.crm_token
+              payload.new && 
+              payload.new.crm_token !== undefined && 
+              payload.new.crm_token !== currentCrmToken
             ) {
               await supabase.auth.signOut()
               window.location.href = '/login'
