@@ -475,6 +475,51 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
           </div>
         </div>
 
+        {/* Recent Contacts List */}
+        <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+            <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{dict.recent_contacts || 'Recent Contacts'}</h3>
+            <Link href="/dashboard/contacts" style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--accent-light)', fontWeight: 500 }}>
+              {dict.view_all || 'View all'} <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          {recent.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '24px 0', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ fontSize: 32, marginBottom: 12 }}>📇</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 6 }}>
+                {dict.no_contacts || 'No contacts yet'}
+              </div>
+              <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 16 }}>
+                {dict.start_networking || 'Start networking at events or add contacts manually.'}
+              </p>
+              <Link href="/dashboard/contacts">
+                <button className="btn btn-primary btn-sm">{dict.go_to_contacts || 'Go to Contacts'}</button>
+              </Link>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1, overflowY: 'auto' }}>
+              {recent.map((c: any) => (
+                <Link href="/dashboard/contacts" key={c.id} style={{ textDecoration: 'none' }}>
+                  <div className="recent-contact-card" style={{ padding: '12px', background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                    <div className="contact-avatar" style={{ width: 36, height: 36, fontSize: 12 }}>
+                      {c.avatar_url ? (
+                        <img src={c.avatar_url} alt={c.name} />
+                      ) : (
+                        getInitials(c.name)
+                      )}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div className="contact-name" style={{ fontSize: 13 }}>{c.name}</div>
+                      <div className="contact-email" style={{ fontSize: 11 }}>{c.title || c.company || '—'}</div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
       </div>
 
       {/* Goals Modal */}
@@ -544,50 +589,6 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
               </button>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Recent Contacts List */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-        <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.3px' }}>{dict.recent_contacts || 'Recent Contacts'}</h2>
-        <Link href="/dashboard/contacts" style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--accent-light)', fontWeight: 500 }}>
-          {dict.view_all || 'View all'} <ArrowRight size={14} />
-        </Link>
-      </div>
-
-      {recent.length === 0 ? (
-        <div className="card" style={{ textAlign: 'center', padding: '48px 24px', marginBottom: 40 }}>
-          <div style={{ fontSize: 40, marginBottom: 12 }}>📇</div>
-          <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 6 }}>
-            {dict.no_contacts || 'No contacts yet'}
-          </div>
-          <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 20 }}>
-            {dict.start_networking || 'Start networking at events or add contacts manually.'}
-          </p>
-          <Link href="/dashboard/contacts">
-            <button className="btn btn-primary btn-sm">{dict.go_to_contacts || 'Go to Contacts'}</button>
-          </Link>
-        </div>
-      ) : (
-        <div className="recent-grid" style={{ marginBottom: 40 }}>
-          {recent.map((c: any) => (
-            <Link href="/dashboard/contacts" key={c.id} style={{ textDecoration: 'none' }}>
-              <div className="recent-contact-card">
-                <div className="contact-avatar">
-                  {c.avatar_url ? (
-                    <img src={c.avatar_url} alt={c.name} />
-                  ) : (
-                    getInitials(c.name)
-                  )}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div className="contact-name" style={{ fontSize: 13 }}>{c.name}</div>
-                  <div className="contact-email">{c.title || c.company || '—'}</div>
-                </div>
-                {c.is_new && <span className="badge badge-new">New</span>}
-              </div>
-            </Link>
-          ))}
         </div>
       )}
 
