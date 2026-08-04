@@ -18,7 +18,7 @@ export default async function DashboardPage() {
       .order('created_at', { ascending: false }),
     supabase
       .from('profiles')
-      .select('full_name, job_title, company_name, avatar_url')
+      .select('full_name, job_title, company_name, avatar_url, networking_goals')
       .eq('id', user.id)
       .single(),
   ])
