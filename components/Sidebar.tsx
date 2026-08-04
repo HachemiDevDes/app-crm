@@ -96,9 +96,8 @@ export default function Sidebar({ dict = {} }: { dict?: any }) {
   return (
     <aside className="sidebar">
       {/* Logo */}
-      <div className="sidebar-logo" style={{ padding: '24px 20px', borderBottom: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        <EventZoneLogo height={20} showCrm={true} />
-        <LanguageToggle />
+      <div className="sidebar-logo" style={{ padding: '24px 20px', borderBottom: '1px solid var(--border)' }}>
+        <EventZoneLogo height={20} showCrm={false} />
       </div>
 
       {/* Navigation */}
