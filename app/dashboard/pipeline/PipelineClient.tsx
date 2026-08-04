@@ -198,6 +198,30 @@ export default function PipelineClient({ dict = {} }: { dict?: any }) {
   const [showAddTag, setShowAddTag] = useState(false)
   const [newTagInput, setNewTagInput] = useState('')
 
+  // Board drag-to-scroll state
+  const boardRef = useRef<HTMLDivElement>(null)
+  const [isDraggingBoard, setIsDraggingBoard] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+
+  const onBoardMouseDown = (e: React.MouseEvent) => {
+    if (!boardRef.current) return
+    // Only allow drag-to-scroll on the board background, not on cards
+    if ((e.target as HTMLElement).closest('.ag-deal-card')) return
+    setIsDraggingBoard(true)
+    setStartX(e.pageX - boardRef.current.offsetLeft)
+    setScrollLeft(boardRef.current.scrollLeft)
+  }
+  const onBoardMouseLeave = () => setIsDraggingBoard(false)
+  const onBoardMouseUp = () => setIsDraggingBoard(false)
+  const onBoardMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingBoard || !boardRef.current) return
+    e.preventDefault()
+    const x = e.pageX - boardRef.current.offsetLeft
+    const walk = (x - startX) * 1.5 // Scroll speed multiplier
+    boardRef.current.scrollLeft = scrollLeft - walk
+  }
+
   const loadData = async () => {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
@@ -440,7 +464,15 @@ export default function PipelineClient({ dict = {} }: { dict?: any }) {
       {loading ? (
         <div className="loading-wrap"><div className="spinner" /></div>
       ) : (
-        <div className="ag-board">
+        <div 
+          className={`ag-board ${isDraggingBoard ? 'dragging-board' : ''}`}
+          ref={boardRef}
+          onMouseDown={onBoardMouseDown}
+          onMouseLeave={onBoardMouseLeave}
+          onMouseUp={onBoardMouseUp}
+          onMouseMove={onBoardMouseMove}
+          style={{ cursor: isDraggingBoard ? 'grabbing' : 'auto' }}
+        >
           {stages.map((stage, index) => {
             const stageContacts = filtered.filter(c => c.pipeline_stage === stage)
             const color = DEFAULT_COLORS[index % DEFAULT_COLORS.length]

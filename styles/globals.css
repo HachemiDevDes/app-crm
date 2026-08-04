@@ -107,6 +107,8 @@ input, textarea, select { font-family: inherit; }
 
 .main-content {
   flex: 1;
+  min-width: 0;
+  max-width: 100%;
   margin-left: var(--sidebar-width);
   padding: 32px 36px;
   min-height: 100vh;
@@ -1510,12 +1512,16 @@ textarea.form-input {
   padding-bottom: 16px;
   align-items: flex-start;
   min-height: calc(100vh - 280px);
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.ag-board::-webkit-scrollbar {
+  display: none;
 }
 
 .ag-column {
-  flex: 1;
-  min-width: 250px;
-  max-width: 320px;
+  flex: 0 0 300px;
+  min-width: 300px;
   background: rgba(17, 24, 39, 0.4);
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
