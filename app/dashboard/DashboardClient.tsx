@@ -229,7 +229,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
       </div>
 
       {/* Mobile-Style Widgets Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '32px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '32px' }}>
         
         {/* Streak & Goals Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -246,7 +246,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
             <div style={{ fontSize: 32, fontWeight: 700, color: 'var(--text-primary)' }}>{streak}</div>
           </div>
 
-          <div className="card" style={{ padding: '24px', position: 'relative' }}>
+          <div className="card" style={{ padding: '24px', position: 'relative', flex: 1, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
               <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>Networking Goals</div>
               <button onClick={() => setShowGoalsModal(true)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}>
@@ -258,7 +258,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
                 No goals set. Tap the edit icon to set your daily, weekly, monthly, or yearly goals!
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px', flex: 1, justifyContent: 'space-evenly' }}>
                 {goals.daily && (
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14 }}>
                     <span style={{ color: 'var(--text-secondary)' }}>Daily</span>
@@ -289,7 +289,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
         </div>
 
         {/* Contact Sources */}
-        <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
+        <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 20 }}>Contact Sources</h3>
           {sourcesData.length > 0 ? (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 160 }}>
@@ -378,7 +378,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
             </div>
           </div>
 
-          <div className="card" style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div className="card" style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
             <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 20 }}>Top Companies</h3>
             {topCompaniesData.length > 0 ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -407,7 +407,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
         <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.3px' }}>{dict.network_analytics || 'Network Analytics'}</h2>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '40px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '40px' }}>
         
         {/* Connections Over Time */}
         <div className="card" style={{ padding: '24px', height: '260px', display: 'flex', flexDirection: 'column' }}>
@@ -476,7 +476,7 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
         </div>
 
         {/* Recent Contacts List */}
-        <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', maxHeight: '260px' }}>
+        <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
             <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{dict.recent_contacts || 'Recent Contacts'}</h3>
             <Link href="/dashboard/contacts" style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--accent-light)', fontWeight: 500 }}>
