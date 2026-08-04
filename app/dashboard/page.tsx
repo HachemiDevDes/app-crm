@@ -1,4 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
+import { cookies } from 'next/headers'
+import { getDictionary } from '@/lib/i18n/dictionaries'
 import DashboardClient from './DashboardClient'
 
 export default async function DashboardPage() {
@@ -31,6 +33,9 @@ export default async function DashboardPage() {
   const newContacts = connections.filter((c: any) => c.is_new).length
   const recent = connections.slice(0, 6)
 
+  const locale = cookies().get('NEXT_LOCALE')?.value || 'en'
+  const dict = getDictionary(locale)
+
   return (
     <DashboardClient
       total={total}
@@ -39,6 +44,7 @@ export default async function DashboardPage() {
       recent={recent}
       profile={profile}
       allConnections={connections}
+      dict={dict.dashboard}
     />
   )
 }

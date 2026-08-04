@@ -14,19 +14,20 @@ import {
   GitBranch,
 } from 'lucide-react'
 import EventZoneLogo from './EventZoneLogo'
+import LanguageToggle from './LanguageToggle'
 
-const NAV_ITEMS = [
-  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { href: '/dashboard/contacts', label: 'Contacts', icon: Users },
-  { href: '/dashboard/pipeline', label: 'Pipeline', icon: GitBranch },
-  { href: '/dashboard/profile', label: 'My Profile', icon: User },
-]
-
-export default function Sidebar() {
+export default function Sidebar({ dict = {} }: { dict?: any }) {
   const pathname = usePathname()
   const router = useRouter()
   const supabase = createClient()
   const [profile, setProfile] = useState<{ full_name?: string; avatar_url?: string; job_title?: string } | null>(null)
+
+  const NAV_ITEMS = [
+    { href: '/dashboard', label: dict.dashboard || 'Dashboard', icon: LayoutDashboard, exact: true },
+    { href: '/dashboard/contacts', label: dict.contacts || 'Contacts', icon: Users },
+    { href: '/dashboard/pipeline', label: dict.pipeline || 'Pipeline', icon: GitBranch },
+    { href: '/dashboard/profile', label: dict.my_profile || 'My Profile', icon: User },
+  ]
 
   useEffect(() => {
     let channel: any
@@ -79,7 +80,7 @@ export default function Sidebar() {
     router.push('/login')
   }
 
-  const isActive = (item: typeof NAV_ITEMS[0]) => {
+  const isActive = (item: any) => {
     if (item.exact) return pathname === item.href
     return pathname.startsWith(item.href)
   }
@@ -91,13 +92,14 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       {/* Logo */}
-      <div className="sidebar-logo" style={{ padding: '0 20px 24px', borderBottom: '1px solid var(--border)' }}>
+      <div className="sidebar-logo" style={{ padding: '24px 20px', borderBottom: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         <EventZoneLogo height={20} showCrm={true} />
+        <LanguageToggle />
       </div>
 
       {/* Navigation */}
       <nav className="sidebar-nav">
-        <div className="sidebar-section-label">Menu</div>
+        <div className="sidebar-section-label">{dict.menu || 'MENU'}</div>
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon
           return (
@@ -128,6 +130,7 @@ export default function Sidebar() {
             <div className="sidebar-user-role">{profile?.job_title || 'Member'}</div>
           </div>
           <button className="logout-btn" onClick={handleLogout} title="Logout">
+            <span>{dict.logout || 'Logout'}</span>
             <LogOut size={15} />
           </button>
         </div>
