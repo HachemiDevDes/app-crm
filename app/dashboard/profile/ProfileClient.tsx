@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import LanguageToggle from '@/components/LanguageToggle'
 import { Camera, Save, Plus, Trash2, Globe, Link2, AtSign, Image, Phone, Mail } from 'lucide-react'
 
 // ─── Social platform config ───────────────────────────────────────
@@ -181,10 +182,13 @@ export default function ProfileClient({ dict = {} }: { dict?: any }) {
           <h1 className="page-title">{dict.title || 'My Profile'}</h1>
           <p className="page-subtitle">{dict.subtitle || 'Changes sync instantly with the EventZone mobile app'}</p>
         </div>
-        <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
-          <Save size={16} />
-          {saving ? '...' : (dict.save || 'Save Changes')}
-        </button>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <LanguageToggle />
+          <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
+            <Save size={16} />
+            {saving ? '...' : (dict.save || 'Save Changes')}
+          </button>
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 24, alignItems: 'start' }}>

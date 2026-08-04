@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import LanguageToggle from '@/components/LanguageToggle'
 import {
   Search, UserPlus, Download, ChevronDown, X,
   Mail, Phone, Globe, MapPin, Tag, Trash2, FileText, Edit3
@@ -436,7 +437,8 @@ export default function ContactsClient({ dict = {} }: { dict?: any }) {
           <h1 className="page-title">{dict.title || 'Contacts'}</h1>
           <p className="page-subtitle">{contacts.length} {dict.contact_count || 'Contact'}{contacts.length !== 1 ? 's' : ''}</p>
         </div>
-        <div style={{ display: 'flex', gap: 10 }}>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <LanguageToggle />
           {/* Export */}
           <div className="dropdown-wrap" ref={exportRef}>
             <button className="btn btn-ghost" onClick={() => setShowExport(!showExport)}>

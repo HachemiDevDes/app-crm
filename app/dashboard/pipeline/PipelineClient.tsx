@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import LanguageToggle from '@/components/LanguageToggle'
 import {
   GitBranch, Check, X, Search, Sliders, ChevronRight, ChevronLeft,
   Mail, Phone, Globe, MapPin, FileText, Trash2, Settings, Plus, GripVertical
@@ -412,10 +413,13 @@ export default function PipelineClient({ dict = {} }: { dict?: any }) {
           <h1 className="page-title">{dict.title || 'Deals Pipeline'}</h1>
           <p className="page-subtitle">{dict.subtitle || 'Track, follow up, and close your connections visually'}</p>
         </div>
-        <button className="btn btn-ghost" onClick={() => setShowManageModal(true)}>
-          <Settings size={16} />
-          {dict.manage_columns || 'Manage Columns'}
-        </button>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <LanguageToggle />
+          <button className="btn btn-ghost" onClick={() => setShowManageModal(true)}>
+            <Settings size={16} />
+            {dict.manage_columns || 'Manage Columns'}
+          </button>
+        </div>
       </div>
 
       <div className="stats-grid" style={{ marginBottom: 24 }}>

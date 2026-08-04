@@ -9,6 +9,7 @@ import {
 } from 'recharts'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import LanguageToggle from '@/components/LanguageToggle'
 
 interface Props {
   total: number
@@ -201,12 +202,15 @@ export default function DashboardClient({ total, newThisWeek, newContacts, recen
             {dict.subtitle || "Here's an overview of your EventZone network"}
           </p>
         </div>
-        <Link href="/dashboard/contacts">
-          <button className="btn btn-primary">
-            <UserPlus size={16} />
-            {dict.add_contact || 'Add Contact'}
-          </button>
-        </Link>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <LanguageToggle />
+          <Link href="/dashboard/contacts">
+            <button className="btn btn-primary">
+              <UserPlus size={16} />
+              {dict.add_contact || 'Add Contact'}
+            </button>
+          </Link>
+        </div>
       </div>
 
       {/* Stats */}
